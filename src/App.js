@@ -11,14 +11,40 @@ const numCorrect = 0;
 
 class App extends Component {
   state = {
-    numOfQuestionsAnswered: numQuestions
-  }
+    value1,
+    value2,
+    value3,
+    proposedAnswer,
+    numQuestions,
+    numCorrect
+  };
+  
+  getNewEquation = () => {
+    this.setState({
+      value1: Math.floor(Math.random() * 100),
+      value2: Math.floor(Math.random() * 100),
+      value3: Math.floor(Math.random() * 100),
+      proposedAnswer: Math.floor(Math.random() * 3) + this.state.value1 + this.state.value2 + this.state.value3
+    })
+  };
 
-  increaseNumOfQuestionsAnswered = () => {
+  increasenumQuestions = () => {
+    this.getNewEquation();
     this.setState((currentState) => ({
-      numOfQuestionsAnswered: currentState.numOfQuestionsAnswered+1
+      numQuestions: currentState.numQuestions + 1
     }))
-  }
+  };
+
+ increasenumCorrect = (userchoice) => {
+   const check=this.state.value1+this.state.value2+this.state.value3===this.state.proposedAnswer;
+   console.log(userchoice, check);
+   if(userchoice===check){
+     console.log(userchoice===check);
+     this.setState((currentState) => ({
+       numCorrect: currentState.numCorrect + 1 
+     }))
+   }
+ };
 
   render() {
     return (
@@ -30,12 +56,20 @@ class App extends Component {
         <div className="game">
           <h2>Mental Math</h2>
           <div className="equation">
-            <p className="text">{`${value1} + ${value2} + ${value3} = ${proposedAnswer}`}</p>
+            <p className="text">{`${this.state.value1} + ${this.state.value2} + ${this.state.value3} = ${this.state.proposedAnswer}`}</p>
           </div>
-          <button onClick={() => this.increaseNumOfQuestionsAnswered()}>True</button>
-          <button onClick={() => this.increaseNumOfQuestionsAnswered()}>False</button>
+          <button onClick={() => {
+			this.increasenumQuestions()
+			this.increasenumCorrect(true)
+			}}>True
+		  </button>
+          <button onClick={() => { 
+			this.increasenumQuestions()
+			this.increasenumCorrect(false)
+		    }}>False
+		  </button>
           <p className="text">
-            Your Score: {numCorrect}/{this.state.numOfQuestionsAnswered}
+            Your Score: {this.state.numCorrect}/{this.state.numQuestions}
           </p>
         </div>
       </div>
