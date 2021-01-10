@@ -37,9 +37,7 @@ class App extends Component {
 
  increasenumCorrect = (userchoice) => {
    const check=this.state.value1+this.state.value2+this.state.value3===this.state.proposedAnswer;
-   console.log(userchoice, check);
    if(userchoice===check){
-     console.log(userchoice===check);
      this.setState((currentState) => ({
        numCorrect: currentState.numCorrect + 1 
      }))
